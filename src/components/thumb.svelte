@@ -2,19 +2,19 @@
 	import { Motion } from 'svelte-motion';
 	// import { onMount } from 'svelte';
 	type PropType = {
-		selected: boolean;
-		imgSrc: string;
-		index: number;
+		selected?: boolean;
+		imgSrc?: string;
+		index?: number;
 		number: number;
 		type?: 'clips' | 'stream';
-		onClick: (index: number, type: 'clips' | 'stream') => void;
+		onClick?: (index: number, type: 'clips' | 'stream') => void;
 	};
 
 	let { imgSrc, index, number, onClick, selected, type }: PropType = $props();
 </script>
 
 <div
-	class={`group relative z-999 mr-4 flex-[0_0_12%] rounded-2xl ${
+	class={`group relative z-999 mr-4 mb-14 flex w-[220px] h-[180px] rounded-2xl ${
 		selected ? 'border-[2px] border-card opacity-100' : 'border-[2px] opacity-30 hover:opacity-60'
 	}`}
 >
@@ -28,10 +28,10 @@
 			</div>
 		</div>
 		<img
-			class="ImgCarusel"
-			loading="lazy"
 			width="320"
 			height="180"
+			class="ImgCarusel w-full"
+			loading="lazy"
 			src={imgSrc}
 			alt="Your alt text"
 		/>
@@ -40,26 +40,26 @@
 	<div
 		class="ImgCarusel absolute top-0 z-10 flex w-full flex-col rounded-2xl opacity-0 group-hover:opacity-100"
 	>
-		<Motion
+		<!-- on:click={() => onClick(index, 'stream')} -->
+		<!-- <Motion
 			class="relative flex h-[50%] w-full items-center justify-center bg-black/50 hover:bg-black/5"
 			whileHover={{ scale: 1.05 }}
-			on:click={() => onClick(index, 'stream')}
 			style="background-image: linear-gradient(to top, transparent 50%, rgba(0, 0, 0, 0.9) 100%)"
 		>
-			<Motion class="mt-5 text-white focus:outline-none" whileHover={{ scale: 1.1 }}>
-				<div class="text-base text-white xl:text-sm">Stream Online</div>
-			</Motion>
-		</Motion>
+			<Motion class="mt-5 text-white focus:outline-none" whileHover={{ scale: 1.1 }}> -->
+		<div class="text-base text-white xl:text-sm">Stream Online</div>
+		<!-- </Motion>
+		</Motion> -->
 
-		<Motion
+		<!-- on:click={() => onClick(index, 'clips')} -->
+		<!-- <Motion
 			class="relative flex h-[50%] w-full items-center justify-center bg-black/50 hover:bg-black/5"
 			whileHover={{ scale: 1.05 }}
-			on:click={() => onClick(index, 'clips')}
 			style="background-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.9) 100%)"
 		>
-			<Motion class="mb-5 text-white focus:outline-none" whileHover={{ scale: 1.1 }}>
-				<div class="text-base text-white xl:text-sm">Top Clips</div>
-			</Motion>
-		</Motion>
+			<Motion class="mb-5 text-white focus:outline-none" whileHover={{ scale: 1.1 }}> -->
+		<div class="text-base text-white xl:text-sm">Top Clips</div>
+		<!-- </Motion>
+		</Motion> -->
 	</div>
 </div>

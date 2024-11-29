@@ -3,8 +3,9 @@
 	import { Button } from '../lib/components/ui/button/index.js';
 	import Loading from '../components/loading.svelte';
 	import { onMount } from 'svelte';
-	import type { TopGame } from 'src/shared/api/twitch/types.js';
-  import Carousel from 'src/components/carousel.svelte';
+	import type { TopGame } from '../shared/api/twitch/types.js';
+	import Carousel from '../components/carousel.svelte';
+	import DialogInput from '../components/dialog-input.svelte';
 
 	let isLoading = true;
 	let games: TopGame[] | null;

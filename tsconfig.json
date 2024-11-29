@@ -11,15 +11,6 @@
 		"strict": true,
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
+		"baseUrl": "."
 	}
 }
-
-// "paths": {
-// 	"$lib": ["./src/lib"],
-// 	"$lib/*": ["./src/b/*"]
-
-// }

@@ -5,11 +5,5 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		port: 3000
-	},
+	}
 });
-
-// resolve: {
-//   alias: {
-//     $lib: path.resolve("./src/lib"),
-//   },
-// },

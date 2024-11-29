@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { Motion } from 'svelte-motion';
 	import * as Dialog from '../lib/components/ui/dialog/index.js';
-	import { Input } from 'src/lib/components/ui/input/index.js';
-	import { searchChannels } from 'src/shared/api/twitch/axios.js';
+	import { Input } from '../lib/components/ui/input/index.js';
+	import { searchChannels } from '../shared/api/twitch/axios.js';
 	import { goto } from '$app/navigation';
+
 	let { children } = $props();
-	// const navigate = useNavigate();
 	let searchQuery = $state<string>('');
 
-	let search = async () => {
-		let res = await searchChannels(searchQuery);
-		return res;
-	};
 
-	let searchResults = $state(search());
+	// let search = async () => {
+	// 	let res = await searchChannels(searchQuery);
+	// 	return res;
+	// };
+	// let searchResults = $state(search());
 </script>
 
 <Dialog.Root>
@@ -44,7 +44,7 @@
 			exit={{ opacity: 0, y: -20 }}
 			class="overflow-hidden"
 		>
-			{#await searchResults then res}
+			<!-- {#await searchResults then res}
 				{#each res as channel}
 					<div>
 						<Motion
@@ -66,14 +66,14 @@
 								/>
 
 								<span class="top[-20px] relative pl-5 text-white">{channel.display_name}</span>
-								<!-- {#if channel.is_live}
+								{#if channel.is_live}
               <DotFilledIconn class="relative left-1 top-[2px] animate-pulse text-red-700" />
-            {/if} -->
+            {/if}
 							</div>
 						</Motion>
 					</div>
 				{/each}
-			{/await}
+			{/await} -->
 		</Motion>
 	</Dialog.Content>
 </Dialog.Root>

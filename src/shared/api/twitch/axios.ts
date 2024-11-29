@@ -37,10 +37,6 @@ export async function getAccessToken(): Promise<string> {
 
 		const newAccessToken = response.data.access_token;
 		if (!response.data.expires_in) return newAccessToken;
-		const expirationTime = Date.now() + response.data.expires_in * 1000;
-
-		window.localStorage.setItem('twitch_access_token', newAccessToken);
-		window.localStorage.setItem('twitch_token_expiration', expirationTime.toString());
 
 		return newAccessToken;
 	} catch (error) {
@@ -53,9 +49,16 @@ let token: string | null = null;
 let tokenPromise: Promise<string> | null = null;
 
 export async function fetchToken(): Promise<string> {
+	// Серверная среда
 	if (!browser) {
-		throw new Error('Cannot use localStorage on the server');
+		if (!token) {
+			// Запрашиваем новый токен на сервере
+			token = await getAccessToken();
+		}
+		return token;
 	}
+
+	// Клиентская среда
 	const savedToken = window.localStorage.getItem('twitch_access_token');
 	const savedExpiration = window.localStorage.getItem('twitch_token_expiration');
 
@@ -70,6 +73,13 @@ export async function fetchToken(): Promise<string> {
 
 	tokenPromise = getAccessToken().then((fetchedToken) => {
 		token = fetchedToken;
+
+		if (browser) {
+			const expirationTime = Date.now() + 3600 * 1000; // Пример: токен действует 1 час
+			window.localStorage.setItem('twitch_access_token', fetchedToken);
+			window.localStorage.setItem('twitch_token_expiration', expirationTime.toString());
+		}
+
 		tokenPromise = null;
 		return token;
 	});

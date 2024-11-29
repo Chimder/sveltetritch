@@ -14,27 +14,9 @@ importers:
       '@sveltejs/adapter-vercel':
         specifier: ^5.4.8
         version: 5.4.8(@sveltejs/kit@2.8.5(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.2.10)(vite@5.4.11))(svelte@5.2.10)(vite@5.4.11))(rollup@4.27.4)
-      '@tanstack/query-sync-storage-persister':
-        specifier: ^5.61.5
-        version: 5.61.5
-      '@tanstack/svelte-query':
-        specifier: ^5.61.5
-        version: 5.61.5(svelte@5.2.10)
-      '@tanstack/svelte-query-devtools':
-        specifier: ^5.61.5
-        version: 5.61.5(@tanstack/svelte-query@5.61.5(svelte@5.2.10))(svelte@5.2.10)
-      '@tanstack/svelte-query-persist-client':
-        specifier: ^5.61.5
-        version: 5.61.5(@tanstack/svelte-query@5.61.5(svelte@5.2.10))(svelte@5.2.10)
       axios:
         specifier: ^1.7.8
         version: 1.7.8
-      embla-carousel:
-        specifier: ^8.5.1
-        version: 8.5.1
-      embla-carousel-svelte:
-        specifier: ^8.5.1
-        version: 8.5.1(svelte@5.2.10)
       svelte-motion:
         specifier: ^0.12.2
         version: 0.12.2(svelte@5.2.10)
@@ -577,35 +559,6 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tanstack/query-core@5.61.5':
-    resolution: {integrity: sha512-iG5vqurEOEbv+paP6kW3zPENa99kSIrd1THISJMaTwVlJ+N5yjVDNOUwp9McK2DWqWCXM3v13ubBbAyhxT78UQ==}
-
-  '@tanstack/query-devtools@5.61.4':
-    resolution: {integrity: sha512-21Tw+u8E3IJJj4A/Bct4H0uBaDTEu7zBrR79FeSyY+mS2gx5/m316oDtJiKkILc819VSTYt+sFzODoJNcpPqZQ==}
-
-  '@tanstack/query-persist-client-core@5.61.5':
-    resolution: {integrity: sha512-YqJ4aN96brRTSzZN/WEcoid3pUK0h+6wvIhx4Qb6+BEDDHAUj/2jaD4eHqnn8H6YlfnFT6LXfqYv4Z4dwgfLZA==}
-
-  '@tanstack/query-sync-storage-persister@5.61.5':
-    resolution: {integrity: sha512-X3MtyV9yvQy1lWL0nieTSCS9vNedn0RD2EDNtW1BYxt2hRuxx3qMldx8LogZHn5xtyJ9B7oDdVfhIqWBvQFPTw==}
-
-  '@tanstack/svelte-query-devtools@5.61.5':
-    resolution: {integrity: sha512-exoodzZVI568LtRLzCBq49YDEEiyQfXM4BXm4bXPBt76n8OLJlkk+HrG505+2OogRUpl8XL65H+SjpjTlbrgNw==}
-    peerDependencies:
-      '@tanstack/svelte-query': ^5.61.5
-      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
-
-  '@tanstack/svelte-query-persist-client@5.61.5':
-    resolution: {integrity: sha512-BXVEXK6zp9cJMjiVd9rRwCRtH026r9BTEs6cmM6zh3czukJdsoyrqQJ8251QN3rd7P/mVdP2sn4F120MjS0Cng==}
-    peerDependencies:
-      '@tanstack/svelte-query': ^5.61.5
-      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
-
-  '@tanstack/svelte-query@5.61.5':
-    resolution: {integrity: sha512-+cJH9cN9g+4XAQZYJkSQNRoucJi1d+RlhoxhG/bxnTVscZqp14glAG07T7m1c72yffpj3FhcpxTy6khhGrBcxQ==}
-    peerDependencies:
-      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
-
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
@@ -975,19 +928,6 @@ packages:
 
   electron-to-chromium@1.5.67:
     resolution: {integrity: sha512-nz88NNBsD7kQSAGGJyp8hS6xSPtWwqNogA0mjtc2nUYeEf3nURK9qpV18TuBdDmEDgVWotS8Wkzf+V52dSQ/LQ==}
-
-  embla-carousel-reactive-utils@8.5.1:
-    resolution: {integrity: sha512-n7VSoGIiiDIc4MfXF3ZRTO59KDp820QDuyBDGlt5/65+lumPHxX2JLz0EZ23hZ4eg4vZGUXwMkYv02fw2JVo/A==}
-    peerDependencies:
-      embla-carousel: 8.5.1
-
-  embla-carousel-svelte@8.5.1:
-    resolution: {integrity: sha512-sCQDCn+kyuLUysXFRCTboSTslI0LUV5OhVqBAXnSphJ/mYdlbYfMhk03MGck+Mogdgpf9zYrBocp2uF6qUBNAw==}
-    peerDependencies:
-      svelte: ^3.49.0 || ^4.0.0 || ^5.0.0
-
-  embla-carousel@8.5.1:
-    resolution: {integrity: sha512-JUb5+FOHobSiWQ2EJNaueCNT/cQU9L6XWBbWmorWPQT9bkbk+fhsuLr8wWrzXKagO3oWszBO7MSx+GfaRk4E6A==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -2523,37 +2463,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tanstack/query-core@5.61.5': {}
-
-  '@tanstack/query-devtools@5.61.4': {}
-
-  '@tanstack/query-persist-client-core@5.61.5':
-    dependencies:
-      '@tanstack/query-core': 5.61.5
-
-  '@tanstack/query-sync-storage-persister@5.61.5':
-    dependencies:
-      '@tanstack/query-core': 5.61.5
-      '@tanstack/query-persist-client-core': 5.61.5
-
-  '@tanstack/svelte-query-devtools@5.61.5(@tanstack/svelte-query@5.61.5(svelte@5.2.10))(svelte@5.2.10)':
-    dependencies:
-      '@tanstack/query-devtools': 5.61.4
-      '@tanstack/svelte-query': 5.61.5(svelte@5.2.10)
-      esm-env: 1.2.1
-      svelte: 5.2.10
-
-  '@tanstack/svelte-query-persist-client@5.61.5(@tanstack/svelte-query@5.61.5(svelte@5.2.10))(svelte@5.2.10)':
-    dependencies:
-      '@tanstack/query-persist-client-core': 5.61.5
-      '@tanstack/svelte-query': 5.61.5(svelte@5.2.10)
-      svelte: 5.2.10
-
-  '@tanstack/svelte-query@5.61.5(svelte@5.2.10)':
-    dependencies:
-      '@tanstack/query-core': 5.61.5
-      svelte: 5.2.10
-
   '@types/cookie@0.6.0': {}
 
   '@types/estree@1.0.6': {}
@@ -2933,18 +2842,6 @@ snapshots:
     optional: true
 
   electron-to-chromium@1.5.67: {}
-
-  embla-carousel-reactive-utils@8.5.1(embla-carousel@8.5.1):
-    dependencies:
-      embla-carousel: 8.5.1
-
-  embla-carousel-svelte@8.5.1(svelte@5.2.10):
-    dependencies:
-      embla-carousel: 8.5.1
-      embla-carousel-reactive-utils: 8.5.1(embla-carousel@8.5.1)
-      svelte: 5.2.10
-
-  embla-carousel@8.5.1: {}
 
   emoji-regex@8.0.0: {}
 

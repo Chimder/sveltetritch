@@ -5,7 +5,8 @@
 	import { formatCreatedAt } from '../shared/lib/data-forma.js';
 	import DialogIframe from './dialog-iframe.svelte';
 	type Props = {
-		video: TwitchVideo;
+		// video: TwitchVideo;
+		video: any;
 		type: 'offline' | 'stream' | 'clips';
 	};
 	let { video, type }: Props = $props();
@@ -49,7 +50,7 @@
 								{video.duration
 									.split(/[hms]/)
 									.filter(Boolean)
-									.map((tp) => tp.padStart(2, '0'))
+									.map((tp: any) => tp.padStart(2, '0'))
 									.join(':')}
 							</Badge>
 						{:else if type === 'clips'}
