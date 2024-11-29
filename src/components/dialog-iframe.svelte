@@ -6,13 +6,14 @@
 		name?: string;
 		type?: 'stream' | 'offline' | 'clips';
 		videoId?: number;
+		children: any;
 	};
-	let { url, name, type }: Props = $props();
+	let { children, url, name, type }: Props = $props();
 </script>
 
 <Dialog.Root>
 	<Dialog.Trigger class="z-1000" asChild>
-		<slot></slot>
+		{@render children()}
 	</Dialog.Trigger>
 	<Dialog.Content
 		class="z-[9999] flex h-[82vh] w-[84vw] items-baseline justify-center rounded-xl border-[3px] border-card bg-background xl:h-[74vh] xl:w-[92vw] lg:h-[64vh] md:h-[54vh] md:w-[96vw] sm:h-[42vh]"

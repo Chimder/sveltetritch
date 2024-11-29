@@ -6,9 +6,10 @@ export default defineConfig({
 	server: {
 		port: 3000
 	},
-  // resolve: {
-  //   alias: {
-  //     $lib: path.resolve("./src/lib"),
-  //   },
-  // },
 });
+
+// resolve: {
+//   alias: {
+//     $lib: path.resolve("./src/lib"),
+//   },
+// },

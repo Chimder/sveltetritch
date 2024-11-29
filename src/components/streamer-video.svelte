@@ -1,92 +1,70 @@
-import { useEffect, useState } from 'react'
-import { getVideosByUserId } from '@/shared/api/twitchApi/axios'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { useInView } from 'react-intersection-observer'
-import { useParams } from 'react-router-dom'
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getVideosByUserId } from '../shared/api/twitch/axios.js';
+	import { page } from '$app/stores';
 
-import CardVideo from './card-video'
-import { Button } from './ui/button'
-import { Skeleton } from './ui/skeleton'
+	import CardVideo from './card-video.svelte';
+	import { Button } from '../lib/components/ui/button/index.js';
+	import { Skeleton } from '../lib/components/ui/skeleton/index.js';
+	import type { TwitchVideo } from 'src/shared/api/twitch/types.js';
 
-const StreamerVideos = () => {
-  const params = useParams()
-  const id = params?.id as string
+	let id: string = '';
+	let type: 'offline' | 'stream' | 'clips' = 'offline';
+	let videos: { videos: TwitchVideo[]; nextCursor: string | null } | null = null;
+	let isLoading = true;
 
-  const [type, setType] = useState<'offline' | 'stream' | 'clips'>('offline')
+	onMount(async () => {
+		id = $page.params.id;
+		try {
+			isLoading = true;
+			videos = await getVideosByUserId(id, type);
+		} catch (error) {
+			console.error('Error fetching videos:', error);
+		} finally {
+			isLoading = false;
+		}
+	});
+</script>
 
-  const fetchVideos = async ({ pageParam = null }: { pageParam?: string | null }) => {
-    const result = await getVideosByUserId(id, pageParam, type)
-    return result
-  }
-
-  const { data, fetchNextPage, refetch, hasNextPage, isRefetching } = useInfiniteQuery({
-    queryKey: ['getVideosByUserId', id],
-    queryFn: fetchVideos,
-    getNextPageParam: lastPage => lastPage?.nextCursor || null,
-    initialPageParam: undefined,
-    enabled: !!id,
-    retry: 0,
-    staleTime: 50000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
-
-  const ToggleType = async (type: 'offline' | 'stream' | 'clips') => {
-    await setType(type)
-    await refetch()
-  }
-
-  const { ref, inView } = useInView()
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage()
-    }
-  }, [hasNextPage, inView])
-
-  const videos = data?.pages?.flatMap(page => page?.videos)
-  return (
-    <section className="container pt-2 ">
-      <div className="rounded-xl border-[2px] border-border">
-        <div className="flex items-center justify-evenly py-4">
-          <Button
-            onClick={() => ToggleType('offline')}
-            variant="ghost"
-            className={`border-[2px] border-border  px-[12vw] py-[2vh] text-white ${
-              type === 'offline' ? 'bg-primary' : ''
-            }`}
-          >
-            Streams
-          </Button>
-          <Button
-            onClick={() => ToggleType('clips')}
-            variant="ghost"
-            className={`border-[2px] border-border px-[12vw] py-[2vh] text-white ${
-              type === 'clips' ? 'bg-primary' : ''
-            }`}
-          >
-            Clips
-          </Button>
-        </div>
-        <div className="gridCard">
-          {isRefetching
-            ? Array.from({ length: 12 }, (_, index) => (
-                <div
-                  key={`skeleton-${index}`}
-                  className="relative mr-4 w-full overflow-hidden rounded-2xl"
-                  style={{ paddingBottom: '56%' }}
-                >
-                  <div className="absolute inset-0 px-3">
-                    <Skeleton className="h-full w-full" />
-                  </div>
-                </div>
-              ))
-            : videos?.map(video => (
-                <CardVideo ref={ref} key={video.id} type={type} video={video} />
-              ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export default StreamerVideos
+<section class="container pt-2">
+	<div class="rounded-xl border-[2px] border-border">
+		<div class="flex items-center justify-evenly py-4">
+			<Button
+				variant="ghost"
+				class={`border-[2px] border-border  px-[12vw] py-[2vh] text-white ${
+					type === 'offline' ? 'bg-primary' : ''
+				}`}
+			>
+				Streams
+			</Button>
+			<Button
+				variant="ghost"
+				class={`border-[2px] border-border px-[12vw] py-[2vh] text-white ${
+					type === 'clips' ? 'bg-primary' : ''
+				}`}
+			>
+				Clips
+			</Button>
+		</div>
+		<div class="gridCard">
+			{#if isLoading}
+				{#each Array(12) as _, index}
+					<div
+						class="relative mr-4 w-full overflow-hidden rounded-2xl"
+						style="padding-bottom: 56%;"
+					>
+						<div class="absolute inset-0 px-3">
+							<Skeleton class="h-full w-full" />
+						</div>
+					</div>
+				{/each}
+			{:else if videos}
+				{#each videos.videos as video}
+					<CardVideo {type} {video} />
+				{/each}
+			{:else}
+				<p>No videos found</p>
+			{/if}
+		</div>
+	</div>
+</section>

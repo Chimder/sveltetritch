@@ -2,13 +2,14 @@
 	import { Motion } from 'svelte-motion';
 
 	import CardVideo from './card-video.svelte';
-	import Thumb from './carousel-Thumbs.svelte';
+	import Thumb from './thumb.svelte';
 	import Skeleton from 'src/lib/components/ui/skeleton/skeleton.svelte';
 	import { getTopStreamsByGame } from 'src/shared/api/twitch/axios.js';
+	import type { TopGame } from 'src/shared/api/twitch/types.js';
 
 	type PropType = {
-		// slides?: TopGame[]
-		slides?: any;
+		slides: TopGame[]
+		// slides?: any;
 	};
 	let { slides }: PropType = $props();
 	/////////////////////////////

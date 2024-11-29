@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
 
+import { env } from '$env/dynamic/public';
 import type {
 	AccessTokenResponse,
 	Channel,
@@ -14,11 +15,14 @@ import type {
 	TwitchVideo,
 	TwitchVideoResponse
 } from './types.ts';
+import { browser } from '$app/environment';
+
+const { PUBLIC_CLIENT_ID, PUBLIC_CLIENT_SECRET } = env;
 
 export async function getAccessToken(): Promise<string> {
 	try {
-		const clientId = import.meta.env.VITE_PUBLIC_CLIENT_ID;
-		const clientSecret = import.meta.env.VITE_PUBLIC_CLIENT_SECRET;
+		const clientId = PUBLIC_CLIENT_ID;
+		const clientSecret = PUBLIC_CLIENT_SECRET;
 		const response: AxiosResponse<AccessTokenResponse> = await axios.post(
 			'https://id.twitch.tv/oauth2/token',
 			null,
@@ -35,8 +39,8 @@ export async function getAccessToken(): Promise<string> {
 		if (!response.data.expires_in) return newAccessToken;
 		const expirationTime = Date.now() + response.data.expires_in * 1000;
 
-		localStorage.setItem('twitch_access_token', newAccessToken);
-		localStorage.setItem('twitch_token_expiration', expirationTime.toString());
+		window.localStorage.setItem('twitch_access_token', newAccessToken);
+		window.localStorage.setItem('twitch_token_expiration', expirationTime.toString());
 
 		return newAccessToken;
 	} catch (error) {
@@ -49,8 +53,11 @@ let token: string | null = null;
 let tokenPromise: Promise<string> | null = null;
 
 export async function fetchToken(): Promise<string> {
-	const savedToken = localStorage.getItem('twitch_access_token');
-	const savedExpiration = localStorage.getItem('twitch_token_expiration');
+	if (!browser) {
+		throw new Error('Cannot use localStorage on the server');
+	}
+	const savedToken = window.localStorage.getItem('twitch_access_token');
+	const savedExpiration = window.localStorage.getItem('twitch_token_expiration');
 
 	if (savedToken && savedExpiration && Date.now() < Number.parseInt(savedExpiration)) {
 		token = savedToken;
@@ -81,7 +88,7 @@ export async function searchChannels(searchQuery: string): Promise<Channel[]> {
 					first: 5
 				},
 				headers: {
-					'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+					'Client-ID': PUBLIC_CLIENT_ID,
 					Authorization: `Bearer ${accessToken}`
 				}
 			}
@@ -103,7 +110,7 @@ export async function getUserById(userId?: string): Promise<TwitchUser | null> {
 				id: userId
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -126,7 +133,7 @@ export async function getCurrentStreamByUserId(
 				user_id: userId
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -141,7 +148,7 @@ export async function getCurrentStreamByUserId(
 
 export async function getVideosByUserId(
 	userId: string,
-	cursor: string | null,
+	// cursor: 0,
 	type: 'offline' | 'stream' | 'clips'
 ): Promise<{ videos: TwitchVideo[]; nextCursor: string | null }> {
 	const accessToken = await fetchToken();
@@ -155,11 +162,11 @@ export async function getVideosByUserId(
 		}
 		const { data } = await axios.get<TwitchVideoResponse>(url, {
 			params: {
-				first: 40,
-				after: cursor
+				first: 40
+				// after: 0
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -183,7 +190,7 @@ export async function getTopGames(): Promise<TopGame[]> {
 				first: 100
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -212,7 +219,7 @@ export async function getTopStreamsByGame(gameId: string, type: string): Promise
 				first: 40
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -233,7 +240,7 @@ export async function getEmotes(userId?: string): Promise<Emotes[]> {
 				broadcaster_id: userId
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -254,7 +261,7 @@ export async function getUserClips(userId?: string): Promise<any> {
 				broadcaster_id: userId
 			},
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
@@ -274,7 +281,7 @@ export async function getGameClips(): Promise<any> {
 			//   game_id: gameId,
 			// },
 			headers: {
-				'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,
+				'Client-ID': PUBLIC_CLIENT_ID,
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
