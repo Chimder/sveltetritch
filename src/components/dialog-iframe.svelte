@@ -23,18 +23,18 @@
 				<iframe
 					title="video"
 					class="mt-3 h-[74vh] w-[64vw] pr-2 xl:h-[68vh] xl:w-[70vw] lg:mt-1 lg:h-[57vh] lg:w-[86vw] md:h-[49vh] sm:h-[36vh] sm:w-[94vw]"
-					src={`https://player.twitch.tv/?channel=${name}&autoplay=1&muted=1&parent=localhost&parent=tritchv.pages.dev&parent=tritch-vite.vercel.app`}
+					src={`https://player.twitch.tv/?channel=${name}&autoplay=1&muted=1&parent=localhost&parent=sveltetritch.vercel.app`}
 				></iframe>
 				<iframe
 					title="chat"
 					class="mt-3 h-[74vh] w-[18vw] rounded-2xl xl:h-[68vh] lg:hidden"
-					src={`https://www.twitch.tv/embed/${name}/chat?parent=localhost&parent=tritchv.pages.dev&parent=tritch-vite.vercel.app&darkpopout`}
+					src={`https://www.twitch.tv/embed/${name}/chat?parent=localhost&parent=tritchv.pages.dev&parent=sveltetritch.vercel.app&darkpopout`}
 				></iframe>
 			{:else if type === 'offline'}
 				<iframe
 					title="video"
 					class="iframeOC"
-					src={`https://player.twitch.tv/?video=v${name}&parent=localhost&parent=tritchv.pages.dev&parent=tritch-vite.vercel.app&autoplay=true`}
+					src={`https://player.twitch.tv/?video=v${name}&parent=localhost&parent=tritchv.pages.dev&parent=sveltetritch.vercel.app&autoplay=true`}
 				></iframe>
 			{:else}
 				<iframe
