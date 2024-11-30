@@ -6,20 +6,24 @@
 	import type { TopGame } from '../shared/api/twitch/types.js';
 	import Carousel from '../components/carousel.svelte';
 	import DialogInput from '../components/dialog-input.svelte';
+	import type { PageData } from './$types.js';
 
-	let isLoading = true;
-	let games: TopGame[] | null;
+	let { data }: { data: PageData } = $props();
+	// let isLoading = true;
+	let isLoading = false;
+	// let games: TopGame[] | null;
+	// console.log('SETEAC', data);
 
-	onMount(async () => {
-		try {
-			isLoading = true;
-			games = await getTopGames();
-		} catch (error) {
-			console.error('Error fetching videos:', error);
-		} finally {
-			isLoading = false;
-		}
-	});
+	// onMount(async () => {
+	// 	try {
+	// 		isLoading = true;
+	// 		games = await getTopGames();
+	// 	} catch (error) {
+	// 		console.error('Error fetching videos:', error);
+	// 	} finally {
+	// 		isLoading = false;
+	// 	}
+	// });
 	// let games = $state(fetchGames());
 
 	// if (!games) return <Loading></Loading>
@@ -51,8 +55,8 @@
 		<div>
 			<h1 class="pb-3 text-7xl text-white xl:text-6xl md:text-4xl">Top streams Now</h1>
 		</div>
-		{#if games}
-			<Carousel slides={games} />
+		{#if data.games}
+			<Carousel slides={data.games} />
 		{/if}
 	</section>
 </main>

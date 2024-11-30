@@ -1,29 +1,36 @@
 <script lang="ts">
-  import { getEmotes, getUserById } from '../shared/api/twitch/axios.js';
+	import { getEmotes, getUserById } from '../shared/api/twitch/axios.js';
 	import { page } from '$app/stores';
+	import Skeleton from '../lib/components/ui/skeleton/skeleton.svelte';
+	import type { Emotes, TwitchUser } from '../shared/api/twitch/types.js';
 
+	type Props = {
+		user: TwitchUser;
+		emotes: Emotes[];
+	};
+	let { emotes, user }: Props = $props();
 	let id = $page.params.id;
 
 	const getRandomPosition = () =>
 		`top: ${Math.random() * 32}vh; left: ${Math.random() * 98}vw; transform: rotate(${Math.random() > 0.5 ? '' : '-'}${Math.random() * 10}deg);`;
 
-	let fetchUser = async () => {
-		let res = await getUserById(id);
-		return res;
-	};
-	let user = $state(fetchUser());
+	// let fetchUser = async () => {
+	// 	let res = await getUserById(id);
+	// 	return res;
+	// };
+	// let user = $state(fetchUser());
 
-	let fetchEmotes = async () => {
-		let res = await getEmotes(id);
-		return res;
-	};
-	let emotes = $state(fetchEmotes());
+	// let fetchEmotes = async () => {
+	// 	let res = await getEmotes(id);
+	// 	return res;
+	// };
+	// let emotes = $state(fetchEmotes());
 </script>
 
-<div>
+<div class="w-full h-full relative">
 	<div class="z-1 absolute mt-16 flex h-[60vh] w-full overflow-x-hidden">
 		{#await emotes}
-			<div>loading</div>
+			<!-- <Skeleton class="mt-16 z-1000 w-full z-50 bg-red-600" /> -->
 		{:then emotes}
 			{#each emotes as emote}
 				<div style={getRandomPosition()} class="z-1 absolute m-4">
@@ -32,8 +39,9 @@
 			{/each}
 		{/await}
 	</div>
+
 	{#await user}
-		<div>loadingf user</div>
+		<Skeleton class="h-[60vh] w-full bg-border" />
 	{:then user}
 		<section class="container z-100 flex flex-col items-center justify-center pb-10">
 			<div class="z-[500] flex w-full flex-col items-center justify-center pt-28">
@@ -69,4 +77,3 @@
 		</section>
 	{/await}
 </div>
-<!-- </div> -->

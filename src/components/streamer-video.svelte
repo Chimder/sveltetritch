@@ -40,7 +40,7 @@
 			<Button
 				variant="ghost"
 				class={`border-[2px] border-border px-[12vw] py-[2vh] text-white ${
-					type === 'clips' ? 'bg-primary' : ''
+					type !== 'offline' ? '' : 'bg-primary'
 				}`}
 			>
 				Clips
