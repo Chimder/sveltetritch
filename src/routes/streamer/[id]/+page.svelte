@@ -2,7 +2,7 @@
 	import StreamerInfo from '../../../components/streamer-info.svelte';
 	import StreamerVideos from '../../../components/streamer-video.svelte';
 
-	let { data }: { data: any } = $props();
+	let { data } = $props();
 
 </script>
 

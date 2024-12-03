@@ -1,7 +1,8 @@
 import { getEmotes, getUserById } from '../../../shared/api/twitch/axios.js';
-import type { PageServerLoad } from './$types.js';
+import type { PageLoad } from './$types.js';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const ssr = false;
+export const load: PageLoad = async ({ params }) => {
 	const id = params.id;
 	const [user, emotes] = await Promise.all([getUserById(id), getEmotes(id)]);
 	return {

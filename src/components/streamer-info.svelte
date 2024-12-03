@@ -5,8 +5,8 @@
 	import type { Emotes, TwitchUser } from '../shared/api/twitch/types.js';
 
 	type Props = {
-		user: TwitchUser;
-		emotes: Emotes[];
+		user?: TwitchUser;
+		emotes?: Emotes[];
 	};
 	let { emotes, user }: Props = $props();
 	let id = $page.params.id;
@@ -30,9 +30,9 @@
 <div class="w-full h-full relative">
 	<div class="z-1 absolute mt-16 flex h-[60vh] w-full overflow-x-hidden">
 		{#await emotes}
-			<!-- <Skeleton class="mt-16 z-1000 w-full z-50 bg-red-600" /> -->
+			<Skeleton class="mt-16 z-1000 w-full z-50 bg-red-600" />
 		{:then emotes}
-			{#each emotes as emote}
+			{#each emotes! as emote}
 				<div style={getRandomPosition()} class="z-1 absolute m-4">
 					<img class="z-1" src={emote.images.url_2x} alt="" />
 				</div>
